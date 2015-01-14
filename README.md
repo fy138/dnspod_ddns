@@ -1,3 +1,5 @@
+作者：http://www.yiyou.org/
+
 # dnspod_ddns
 DNSPOD API &amp; DDNS script
 这是DNSPOD perl API与ddns.pl更新脚本
