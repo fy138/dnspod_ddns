@@ -1,6 +1,11 @@
 #!/bin/bash
-wget http://xrl.us/cpanm -O /bin/cpanm;
-chmod +x /bin/cpanm
+cpanm="/bin/cpanm";
+if [ ! -f $cpanm ];then
+	wget http://xrl.us/cpanm -O $cpanm;
+fi
+if [ ! -x $cpanm ];then
+	chmod +x $cpanm
+fi
 echo "must install openssl-devel";
 apt-get -y install  libssl-dev
 yum -y install openssl-devel
