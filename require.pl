@@ -14,7 +14,8 @@ my @packages=(
 	'Smart::Comments',
 	'JSON',
 	'HTTP::Tiny',
-	'Net::SSLeay'
+	'Net::SSLeay',
+	'IO::Socket::SSL'
 );
 
 print "You must be root to run this program\n" and exit 1 unless ($> == 0);
