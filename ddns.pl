@@ -30,50 +30,59 @@ if($tiny->{success}){
     		or die "Cannot open file : $!\n";
 	if($ipcache{lastip} && $ipcache{lastip} eq $ip){
 		print "ip not update\n";
-		exit;
 	}else{
 		$ipcache{lastip}=$ip;
 		### ip renew $ip
+		updateip($email,$password,$domain,$sub_domain,$ip);
 	}
 }else{
 	print "can't get ip\n";
-	exit;
 }
 
-my $obj = dnspodApi->new(
-	email => $email,
-	password => $password
-);
+sub updateip{
+	my $email	= shift;
+	my $password	= shift;
+	my $domain	= shift;
+	my $sub_domain	= shift;
+	my $ip		= shift;
+
+	my $obj = dnspodApi->new(
+		email => $email,
+		password => $password
+	);
 
 
-my $res = $obj->DomainId({domain => $domain});
+	my $res = $obj->DomainId({domain => $domain});
 ### $res;
-my $domainid;
-if($res->{status}->{code}){
-	$domainid=$res->{domains}->{id};
-}else{
-	die $res->{status}->{message};
-}
-my $recordlist = $obj->RecordList({domain_id=>$domainid});
+	my $domainid;
+	if($res->{status}->{code}){
+		$domainid=$res->{domains}->{id};
+	}else{
+		print  $res->{status}->{message};
+		return ;
+	}
+	my $recordlist = $obj->RecordList({domain_id=>$domainid});
 ### $recordlist;
 
-unless($recordlist->{status}->{code}){
-	die $recordlist->{status}->{message};
-}
-my $sub_id;
-for my $r(@{$recordlist->{records}}){
-	if($r->{name} eq $sub_domain){
-		$sub_id=$r->{id};
-		last;
-	}	
-}
+	unless($recordlist->{status}->{code}){
+		print  $recordlist->{status}->{message};
+		return ;
+	}
+	my $sub_id;
+	for my $r(@{$recordlist->{records}}){
+		if($r->{name} eq $sub_domain){
+			$sub_id=$r->{id};
+			last;
+		}	
+	}
 
-unless ($sub_id){
-	die "sub domain not found ,please add on your DNSPOD\n";
-}
+	unless ($sub_id){
+		print  "sub domain not found ,please add on your DNSPOD\n";
+		return ;
+	}
 
 
-my $result=$obj->RecordDdns({
+	my $result=$obj->RecordDdns({
 		domain_id=>$domainid
 		,record_id=>$sub_id
 		,sub_domain=>'home'
@@ -81,10 +90,11 @@ my $result=$obj->RecordDdns({
 		,value=>$ip
 	});
 
-### $result
-if($result->{status}->{code}){
-	print "SUCCESS!\n";
-}else{
-	print "FAIL!\n";
-	print $result->{status}->{message}."\n";
+	### $result
+	if($result->{status}->{code}){
+		print "SUCCESS!\n";
+	}else{
+		print "FAIL!\n";
+		print $result->{status}->{message}."\n";
+	}
 }
