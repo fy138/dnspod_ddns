@@ -14,6 +14,7 @@ git clone https://github.com/fy138/dnspod_ddns.git
 新系统需要安装gcc，openssl-devel，make 
 
 5、在 ddns.pl 里编辑你的帐号信息
+
 my $domain      = 'yiyou.org';  #域名
 my $sub_domain  = 'home';       #子域名
 my $email       = ''; #dnspod 帐号
