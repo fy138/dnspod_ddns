@@ -4,13 +4,11 @@ use strict;
 use  File::Slurp;
 use App::Daemon qw( daemonize );
 daemonize();
-
-my $code=read_file('ddns.pl');
-#print $code;
 while(1){
+	my $code=read_file('ddns.pl');
 	eval($code);
 	if($@){
 		print  $@;
 	}
-	sleep 300;#暂停后再执行
+	sleep 60;#暂停后再执行
 }
