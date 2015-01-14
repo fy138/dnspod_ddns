@@ -4,8 +4,9 @@ use strict;
 use  File::Slurp;
 use App::Daemon qw( daemonize );
 #$App::Daemon::background = 1;
-daemonize();
 my $code=read_file('ddns.pl');
+daemonize();
+
 #	print $code;
 while(1){
 	eval($code);
