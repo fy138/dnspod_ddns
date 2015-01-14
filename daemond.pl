@@ -1,11 +1,10 @@
 #!/usr/bin/perl
 
 use strict;
-use Daemonise;
 use  File::Slurp;
+use App::Daemon qw( daemonize );
+daemonize();
 
-Daemonise::daemonise;
-#要变为进程的脚本名字
 my $code=read_file('ddns.pl');
 #print $code;
 while(1){
