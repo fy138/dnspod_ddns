@@ -1,7 +1,8 @@
 #!/bin/bash
 cpanm="/bin/cpanm";
 if [ ! -f $cpanm ];then
-	wget http://xrl.us/cpanm -O $cpanm;
+#	wget http://xrl.us/cpanm -O $cpanm;
+wget -O $cpanm --no-check-certificate  https://raw.githubusercontent.com/miyagawa/cpanminus/master/cpanm
 fi
 if [ ! -x $cpanm ];then
 	chmod +x $cpanm
