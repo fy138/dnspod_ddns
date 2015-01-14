@@ -29,14 +29,15 @@ if($tiny->{success}){
 	tie(%ipcache, 'DB_File','/dev/shm/lastip'.$sub_domain.$domain, O_CREAT|O_RDWR, 0666, $DB_BTREE)
     		or die "Cannot open file : $!\n";
 	if($ipcache{lastip} && $ipcache{lastip} eq $ip){
-		die "ip not update";
-	
+		print "ip not update\n";
+		exit;
 	}else{
 		$ipcache{lastip}=$ip;
 		### ip renew $ip
 	}
 }else{
-	die "can't get ip";
+	print "can't get ip\n";
+	exit;
 }
 
 my $obj = dnspodApi->new(
