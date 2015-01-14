@@ -16,7 +16,8 @@ my @packages=(
 	'HTTP::Tiny',
 	'Net::SSLeay',
 	'IO::Socket::SSL',
-	'File::Slurp'
+	'File::Slurp',
+	'App::Daemon'
 );
 
 print "You must be root to run this program\n" and exit 1 unless ($> == 0);
