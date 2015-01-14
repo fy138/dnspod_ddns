@@ -80,4 +80,10 @@ my $result=$obj->RecordDdns({
 		,value=>$ip
 	});
 
-print Dumper($result);
+### $result
+if($result->{status}->{code}){
+	print "SUCCESS!\n";
+}else{
+	print "FAIL!\n";
+	print $result->{status}->{message}."\n";
+}
