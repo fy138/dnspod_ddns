@@ -26,11 +26,18 @@ my $password    = ''; #dnspod 密码
 
 6、chmod +x  daemond.pl 如果你用crontab 则不需要执行这个文件。
 这个文件可以省去你配置crontab 的麻烦。它可以将这个脚本变成进程，每300秒执行一次检查，当你修改代码时，要注意先这个进程杀死，再重新执行。
+
 相关命令：
 shell#./daemond.pl start
+
 shell#./daemond.pl status
+
 Pid file:    ./daemond.pid
+
 Pid in file: 21876
+
 Running:     yes
+
 启动进程后，会在本地目录生成 log 和pid文件
+
 7、加入./etc/rc.local 让它随系统启动
