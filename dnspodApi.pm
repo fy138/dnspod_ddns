@@ -5,7 +5,7 @@ use warnings;
 use HTTP::Tiny;
 use Moo;
 use Data::Dumper;
-use Smart::Comments;
+#use Smart::Comments;
 use JSON;
 
 has email => (is => 'rw');
