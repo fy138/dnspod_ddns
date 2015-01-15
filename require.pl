@@ -31,7 +31,7 @@ print "You must be root to run this program\n" and exit 1 unless ($> == 0);
 foreach my $module ( @packages ) {
      unless (eval { require $module }) {
      print "Need to install [ $module ] module.  I'll do that for you now:\n";
-     my $ret = system("/bin/cpanm --mirror http://mirrors.163.com/cpan --mirror-only $module");
+     my $ret = system("/bin/cpanm --mirror http://mirrors.163.com/cpan --mirror-only -n -f $module");
      print $ret;
     }
 }
