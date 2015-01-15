@@ -32,7 +32,7 @@ if($tiny->{success}){
 		print "ip not update\n";
 	}else{
 		$ipcache{lastip}=$ip;
-		### ip renew $ip
+		### $ip
 		updateip($email,$password,$domain,$sub_domain,$ip);
 	}
 }else{
