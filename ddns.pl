@@ -85,7 +85,7 @@ sub updateip{
 	my $result=$obj->RecordDdns({
 		domain_id=>$domainid
 		,record_id=>$sub_id
-		,sub_domain=>'home'
+		,sub_domain=>$sub_domain
 		,record_line=>'默认'
 		,value=>$ip
 	});
