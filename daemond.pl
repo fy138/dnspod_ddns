@@ -21,7 +21,7 @@ while(1){
 	child{ 
 		eval($code);
 		if($@){
-			print  $@;
+			ERROR  $@;
 		}
 		exit;
 	}
