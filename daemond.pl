@@ -9,6 +9,8 @@ use Proc::Fork;
 
 #$App::Daemon::background = 1;
 my $code=read_file('ddns.pl');
+$App::Daemon::logfile    = "/var/log/dnspod_ddns.log";
+$App::Daemon::pidfile    = "/var/run/dnspod_ddns.pid";
 $App::Daemon::as_user    = "root";
 $App::Daemon::as_group   = "root";
 daemonize();
@@ -24,7 +26,6 @@ while(1){
 		exit;
 	}
 	parent{
-	#	exit;
 		my $child_pid=shift;
 		waitpid $child_pid,0;
 	}
