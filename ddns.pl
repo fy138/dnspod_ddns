@@ -20,6 +20,16 @@ my $sub_domain	= 'home';
 my $email	= ''; #dnspod account
 my $password	= ''; #dnspod password
 #------ END CONFIG -------#
+Log::Log4perl->init(\ qq{
+            log4perl.logger = DEBUG, FileApp
+            log4perl.appender.FileApp = Log::Log4perl::Appender::File
+            log4perl.appender.FileApp.filename = /var/log/dnspod_ddns.log
+            log4perl.appender.FileApp.owner    = root
+              # this umask is only temporary
+            log4perl.appender.FileApp.umask    = 0133
+            log4perl.appender.FileApp.layout   = PatternLayout
+            log4perl.appender.FileApp.layout.ConversionPattern = %d %m%n
+        });
 
 my $tiny = HTTP::Tiny->new->get('http://members.3322.org/dyndns/getip');
 my $ip;
@@ -30,11 +40,11 @@ if($tiny->{success}){
 	tie(%ipcache, 'DB_File','/dev/shm/lastip'.$sub_domain.$domain, O_CREAT|O_RDWR, 0666, $DB_BTREE)
     		or die "Cannot open file : $!\n";
 	if($ipcache{lastip} && $ipcache{lastip} eq $ip){
-		#print "ip not update\n";
+	#	INFO "ip not update\n";
 	}else{
 		$ipcache{lastip}=$ip;
 		INFO "IP update:".$ip;
-		INFO updateip($email,$password,$domain,$sub_domain,$ip);
+		updateip($email,$password,$domain,$sub_domain,$ip);
 	}
 }else{
 	ERROR "can't get ip\n";
@@ -93,7 +103,7 @@ sub updateip{
 
 	### $result
 	if($result->{status}->{code}){
-		INFO "SUCCESS!\n";
+	#	INFO "SUCCESS!\n";
 	}else{
 		ERROR "FAIL!\n";
 		ERROR $result->{status}->{message}."\n";
