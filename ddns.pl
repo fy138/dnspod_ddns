@@ -12,6 +12,7 @@ use HTTP::Tiny;
 use utf8;
 use DB_File;
 use Data::Dumper;
+use Log::Log4perl qw(:easy);
 
 #------- CONFIG ------#
 my $domain	= 'yiyou.org';
@@ -29,14 +30,14 @@ if($tiny->{success}){
 	tie(%ipcache, 'DB_File','/dev/shm/lastip'.$sub_domain.$domain, O_CREAT|O_RDWR, 0666, $DB_BTREE)
     		or die "Cannot open file : $!\n";
 	if($ipcache{lastip} && $ipcache{lastip} eq $ip){
-		print "ip not update\n";
+		#print "ip not update\n";
 	}else{
 		$ipcache{lastip}=$ip;
-		### $ip
-		updateip($email,$password,$domain,$sub_domain,$ip);
+		INFO "IP update:".$ip;
+		INFO updateip($email,$password,$domain,$sub_domain,$ip);
 	}
 }else{
-	print "can't get ip\n";
+	ERROR "can't get ip\n";
 }
 
 sub updateip{
@@ -58,14 +59,14 @@ sub updateip{
 	if($res->{status}->{code}){
 		$domainid=$res->{domains}->{id};
 	}else{
-		print  $res->{status}->{message};
+		ERROR  $res->{status}->{message};
 		return ;
 	}
 	my $recordlist = $obj->RecordList({domain_id=>$domainid});
 ### $recordlist;
 
 	unless($recordlist->{status}->{code}){
-		print  $recordlist->{status}->{message};
+		ERROR  $recordlist->{status}->{message};
 		return ;
 	}
 	my $sub_id;
@@ -77,7 +78,7 @@ sub updateip{
 	}
 
 	unless ($sub_id){
-		print  "sub domain not found ,please add on your DNSPOD\n";
+		ERROR  "sub domain not found ,please add on your DNSPOD\n";
 		return ;
 	}
 
@@ -92,9 +93,9 @@ sub updateip{
 
 	### $result
 	if($result->{status}->{code}){
-		print "SUCCESS!\n";
+		INFO "SUCCESS!\n";
 	}else{
-		print "FAIL!\n";
-		print $result->{status}->{message}."\n";
+		ERROR "FAIL!\n";
+		ERROR $result->{status}->{message}."\n";
 	}
 }
