@@ -23,7 +23,8 @@ my @packages=(
 	'Net::SSLeay',
 	'IO::Socket::SSL',
 	'File::Slurp',
-	'App::Daemon'
+	'App::Daemon',
+	'Proc::Fork'
 );
 
 print "You must be root to run this program\n" and exit 1 unless ($> == 0);
