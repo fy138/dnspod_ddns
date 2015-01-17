@@ -21,9 +21,9 @@ my $domain      = 'yiyou.org';  #域名
 
 my $sub_domain  = 'home';       #子域名
 
-my $email       = ''; #dnspod 帐号
+my $email       = 'your_email@here.com'; #dnspod 帐号
 
-my $password    = ''; #dnspod 密码
+my $password    = 'your_password'; #dnspod 密码
 
 到此，你可以执行./ddns.pl这个程序来试试是否更新成功IP地址了。
 (往下看日志文件位置)
