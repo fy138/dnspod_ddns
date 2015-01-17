@@ -45,7 +45,9 @@ shell#./daemond.pl restart
 
 
 启动进程后，会在本地目录生成 log 和pid文件
+
 log文件 /var/log/dnspod_ddns.log
+
 pid文件 /var/run/dnspod_ddns.pid
 
 7、把/path/to/daemond.pl加入/etc/rc.local 让它随系统启动
